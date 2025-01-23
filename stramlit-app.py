@@ -17,7 +17,6 @@ def passcode_dialog():
 
     entered_passcode = st.text_input("Passcode", label_visibility="collapsed")
     if st.button("Submit"):
-        print(entered_passcode)
         st.session_state.is_passcode_valid = entered_passcode == _PASSCODE
 
         if st.session_state.is_passcode_valid:
