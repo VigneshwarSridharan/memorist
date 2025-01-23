@@ -27,7 +27,8 @@ if prompt := st.chat_input():
     st.session_state.messages.append(humanMessage)
     st.chat_message(humanMessage.type).write(humanMessage.content)
 
-    promptTemplate = SystemMessagePromptTemplate.from_template(template=NOTES_TEMPLATE)
+    promptTemplate = SystemMessagePromptTemplate.from_template(
+        template=NOTES_TEMPLATE)
     result = vector_store.similarity_search_with_score(prompt, 5)
 
     notes = [
@@ -35,7 +36,7 @@ if prompt := st.chat_input():
             "note": doc.page_content,
             "date": doc.metadata["date"] if "date" in doc.metadata else "",
         }
-        for doc in result
+        for doc, score in result
     ]
 
     message = promptTemplate.format(
