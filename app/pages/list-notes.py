@@ -1,8 +1,10 @@
 import streamlit as st
-from vector_store import get_notes_vector_Store
+from app.notes import get_all_notes
+
+notes = get_all_notes()
 
 st.write("# List Notes")
 
-vector_store = get_notes_vector_Store()
-
-docs = vector_store.g
+for note in notes:
+    st.write(note["content"])
+    st.divider()

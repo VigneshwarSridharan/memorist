@@ -4,6 +4,7 @@ from langchain_community.vectorstores import SingleStoreDB
 from langchain_core.documents import Document
 import os
 import mysql.connector
+import json
 
 load_dotenv()
 
@@ -18,11 +19,17 @@ mysql = mysql.connector.connect(
 )
 
 cursor = mysql.cursor()
-cursor.execute("SELECT * FROM notes")
+cursor.execute("SELECT id,content,metadata FROM notes")
 rows = cursor.fetchall()
 
+data = [{
+    "id": id,
+    "content": content,
+    "metadata": json.loads(metadata)
+} for id, content, metadata in rows]
+
 print("===" * 30)
-print(rows)
+print(data)
 
 
 vector_store = SingleStoreDB(
